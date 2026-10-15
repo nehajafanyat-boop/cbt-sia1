@@ -5,7 +5,9 @@ namespace App\Filament\Resources\Questions;
 use App\Filament\Resources\Questions\Pages\CreateQuestion;
 use App\Filament\Resources\Questions\Pages\EditQuestion;
 use App\Filament\Resources\Questions\Pages\ListQuestions;
+use App\Filament\Resources\Questions\Pages\ViewQuestion;
 use App\Filament\Resources\Questions\Schemas\QuestionForm;
+use App\Filament\Resources\Questions\Schemas\QuestionInfolist;
 use App\Filament\Resources\Questions\Tables\QuestionsTable;
 use App\Models\Question;
 use BackedEnum;
@@ -15,24 +17,30 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use UnitEnum;
 
 class QuestionResource extends Resource
 {
     protected static ?string $model = Question::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedSquare3Stack3d;
 
-    protected static ?string $recordTitleAttribute = 'payload';
+    protected static ?string $recordTitleAttribute = 'name';
 
-    // Menyembunyikan menu Questions dari sidebar Filament
-    public static function shouldRegisterNavigation(): bool
-    {
-        return false;
-    }
+    protected static string|UnitEnum|null $navigationGroup = 'Basis Data';
+
+    protected static ?string $modelLabel = 'soal';
+
+    protected static ?string $navigationLabel = 'Bank Soal';
 
     public static function form(Schema $schema): Schema
     {
         return QuestionForm::configure($schema);
+    }
+
+    public static function infolist(Schema $schema): Schema
+    {
+        return QuestionInfolist::configure($schema);
     }
 
     public static function table(Table $table): Table
@@ -52,6 +60,7 @@ class QuestionResource extends Resource
         return [
             'index' => ListQuestions::route('/'),
             'create' => CreateQuestion::route('/create'),
+            'view' => ViewQuestion::route('/{record}'),
             'edit' => EditQuestion::route('/{record}/edit'),
         ];
     }

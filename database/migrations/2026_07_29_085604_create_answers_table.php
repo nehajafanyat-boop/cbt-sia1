@@ -13,38 +13,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('answers', function (Blueprint $table) {
-
             $table->id();
-
             $table->foreignIdFor(Question::class)
-                ->constrained()
-                ->cascadeOnDelete();
-
-
-            // Huruf pilihan (A, B, C, D)
-            $table->string('option');
-
-
-            // Isi jawaban
-            $table->text('answer');
-
-
-            // Jawaban benar / salah
-            $table->boolean('is_correct')
-                ->default(false);
-
-
-            // Status aktif
-            $table->boolean('is_active')
-                ->default(true);
-
-
-            $table->softDeletes();
-
+                ->constrained()->cascadeOnDelete();
+            // $table->char('letter');
+            $table->string('text');
+            $table->boolean('is_correct')->default(false);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use App\Models\User;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -10,7 +11,6 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use App\Models\User;
 
 class UsersTable
 {
@@ -19,11 +19,11 @@ class UsersTable
         return $table
             ->columns([
                 TextColumn::make('number')
-                    ->label('No.')          // dengan judul kolom
-                    ->rowIndex()            // metjod penomoran baris
+                    ->label('No.')  // dengan judul kolom
+                    ->rowIndex()    // method penomoran baris
                     ->width(40),
-                ImageColumn::make('getAvatarUrl')
-                    ->label(false)          // tanpa judul kolom
+                ImageColumn::make('avatar')
+                    ->label(false)  // tanpa judul kolom
                     ->circular()
                     ->default(fn (User $record) =>
                         $record->getFilamentAvatarUrl()
@@ -31,20 +31,20 @@ class UsersTable
                     ->width(40),
                 TextColumn::make('name')
                     ->label('Nama lengkap')
-                    ->searchable()          // dapat dicari (search)
-                    ->sortable(),           // dapat diurutkan
+                    ->searchable()  // dapat dicari (search)
+                    ->sortable(),   // dapat diurutkan
                 TextColumn::make('email')
-                    ->label('Email address')
+                    ->label('Alamat email')
                     ->searchable(),
                 TextColumn::make('username')
                     ->searchable(),
                 TextColumn::make('phone')
                     ->label('Telepon')
-                    ->placeholder('-')
+                    ->placeholder('-')  // Teks yang ditampilkan jika null
                     ->searchable()
                     ->toggleable(),
                 // IconColumn::make('is_staff')
-                //    ->boolean(),
+                //     ->boolean(),
                 TextColumn::make('created_at')
                     ->label('Dibuat')
                     ->dateTime('d F Y, H:i:s')

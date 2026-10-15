@@ -15,13 +15,13 @@ class Question extends Model
 
     protected $casts = ['is_active' => 'boolean'];
 
-    // relasi invers ke model subject
+    // relasi inverse ke model Subject
     public function subject(): BelongsTo
     {
         return $this->belongsTo(Subject::class);
     }
 
-    // relasi 1 to many dengan model answer
+    // relas 1 to many dengan model Answer
     public function answers(): HasMany
     {
         return $this->hasMany(Answer::class);

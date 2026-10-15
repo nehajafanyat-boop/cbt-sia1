@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true);
-            // kolom Soft-Delete 'delete_at'
+            // kolom soft-delete 'deleted_at'
             $table->softDeletes();
             $table->timestamps();
         });

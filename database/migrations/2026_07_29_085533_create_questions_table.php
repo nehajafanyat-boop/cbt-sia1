@@ -14,27 +14,18 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-
-            // Foreign Key ke tabel subjects
+            // foreign key untuk relasi ke tabel subjects
             $table->foreignIdFor(Subject::class)
-                ->constrained()
+                ->constrained()     // key constraint
                 ->cascadeOnDelete();
-
-            // Isi soal
             $table->longText('payload');
-
-            // Nilai soal
+            // $table->char('correct_answer');
+            // Bobot soal
             $table->integer('score')->default(1);
 
-            // Keterangan (opsional)
             $table->text('description')->nullable();
-
-            // Status aktif
             $table->boolean('is_active')->default(true);
-
-            // Soft Delete
             $table->softDeletes();
-
             $table->timestamps();
         });
     }

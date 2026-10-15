@@ -29,20 +29,19 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use PhpParser\Node\Stmt\Label;
 use UnitEnum;
 
 class SubjectResource extends Resource
 {
     protected static ?string $model = Subject::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBookOpen;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBookmarkSquare;
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Basic Data';
+    protected static string|UnitEnum|null $navigationGroup = 'Basis Data';
 
-    protected static ?string $modelLabel = 'Pelajaran';
+    protected static ?string $modelLabel = 'pelajaran';
 
     protected static ?string $navigationLabel = 'Data Pelajaran';
 
@@ -51,14 +50,14 @@ class SubjectResource extends Resource
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->label('Mata Pelajaran')
-                    ->placeholder('Nama Mata Pelajaran')
+                    ->label('Mata pelajaran')
+                    ->placeholder('Nama mata pelajaran')
                     ->columnSpanFull()
                     ->unique('subjects', 'name')
                     ->required(),
                 Textarea::make('description')
                     ->label('Deskripsi')
-                    ->placeholder('Keterangan Tambahan')
+                    ->placeholder('Keterangan tambahan')
                     ->columnSpanFull(),
                 Toggle::make('is_active')
                     ->label('Tersedia')
@@ -69,8 +68,7 @@ class SubjectResource extends Resource
                         fn ($state) => $state
                             ? 'Pelajaran ini tersedia untuk diujiankan.'
                             : 'Pelajaran ini tidak tersedia untuk diujiankan.'
-                            )
-                    // ->helperText('Pelajaran ini tersedia untuk diujiankan.'),
+                    ),
             ]);
     }
 
@@ -79,7 +77,7 @@ class SubjectResource extends Resource
         return $schema
             ->components([
                 TextEntry::make('name')
-                    ->label('Nama Mata Pelajaran'),
+                    ->label('Nama mata pelajaran'),
                 IconEntry::make('is_active')
                     ->label('Tersedia')
                     ->boolean(),
@@ -97,7 +95,7 @@ class SubjectResource extends Resource
                     ->placeholder('-'),
                 TextEntry::make('updated_at')
                     ->label('Diubah')
-                    ->dateTime('d F Y: H:i:s')
+                    ->dateTime('d F Y, H:i:s')
                     ->placeholder('-'),
             ]);
     }
@@ -106,9 +104,9 @@ class SubjectResource extends Resource
     {
         return $table
             ->recordTitleAttribute('name')
-            ->defaultSort('created_at','desc')
+            ->defaultSort('created_at', 'desc')
             ->columns([
-                TextColumn::make('No')
+                TextColumn::make('#')
                     ->rowIndex()
                     ->width(40),
                 TextColumn::make('name')
@@ -123,7 +121,7 @@ class SubjectResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
-                    ->label('Ditambah')
+                    ->label('Dibuat')
                     ->dateTime('d/m/Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -135,10 +133,10 @@ class SubjectResource extends Resource
             ])
             ->filters([
                 TernaryFilter::make('is_active')
-                    ->label('Status Pelajaran')
-                    ->placeholder('Pilih Salah Satu')
+                    ->label('Status pelajaran')
+                    ->placeholder('Pilih salah satu')
                     ->trueLabel('Tersedia')
-                    ->falseLabel('Tidak Tersedia')
+                    ->falseLabel('Tidak tersedia')
                     ->native(false),
                 TrashedFilter::make()
                     ->native(false),
